@@ -1,0 +1,103 @@
+= XSS Shield
+
+This Rails plugin provides automatic cross site scripting
+({XSS}[http://en.wikipedia.org/wiki/Cross-site_scripting]) protection for your
+views. Once installed, you no longer have to manually and painstakingly sanitize
+all your views with HTML escaping (eg. <tt><%= h(foo) %></tt>). Currently only 
+{ERB}[http://www.ruby-doc.org/stdlib/libdoc/erb/rdoc/index.html] templates are
+supported.
+
+For example with XSS Shield:
+  <%= link_to "A & B", "/foo" %>
+will return a +SafeString+:
+  <a href="/foo">A &amp; B</a>
+and not a plain, unsafe +String+:
+  <a href="/foo">A & B</a>
+
+This version has been tested to work with <b><i>Rails 2.1.2</i></b>. Your milage
+may vary.
+
+DISCLAIMER: Note that while no effort is spared to ensure that this plugin works as
+advertised, we cannot guarantee that all your views are 100% XSS safe. Use it at
+your own risk, but remember that {bug
+reports}[http://github.com/jamestyj/xss_shield/issues] and patches are welcomed.
+
+== How it works
+
+It works by subclassing +String+ into +SafeString+. When the ERB engine sees a
+<tt><%= foo %></tt> fragment, it checks if the result of executing +foo+ is a
++SafeString+. If so, it just uses it. Otherwise the string is HTML escaped
+first.
+
+The use of +SafeString+ avoids potential double-escaping. For example, with XSS
+Shield, <tt><%= @foo %></tt> is the same as <tt><%= h(@foo) %></tt>.
+
+If your string contains HTML that you don't want to escape (and you trust it),
+just append <tt>.xss_safe</tt>:
+  <%= "<b>foobar</b>".xss_safe %>
+
+It would be cumbersome to require xss_safe every time you use some helper like
+<tt>render(:partial)</tt> or +link_to+, so some helpers are modified to return
++SafeString+.
+
+If you trust your helpers, you can mark them as XSS safe:
+
+  module Some::Module
+    mark_methods_as_xss_safe :text_field, :check_box
+  end
+
+You may need to manually tweak your helpers, views and layouts to avoid
+unnecessary escaping.
+
+== Other template engines
+
+Currently only ERB templates is supported, but support for other templating
+engines should be relatively straightforward. It's mostly a matter of changing
+to_s to to_xss_safe in a few places in their source.
+
+Patches that add support for other templating engines (along with supporting
+tests) are welcomed.
+
+== Running tests
+
+This plugin monkey patches ERB in order to do its magic, so it's a good idea to
+at least run the included tests to verify that things work in your environment.
+
+You can run the XSS Shield tests by simply running:
+
+  rake
+
+which should generate output looking like this:
+
+  (in /xss_shield)
+  /usr/bin/ruby -I"lib:lib" "/usr/lib/ruby/gems/1.8/gems/rake-0.8.7/lib/rake/rake_test_loader.rb" ...
+  Loaded suite /usr/lib/ruby/gems/1.8/gems/rake-0.8.7/lib/rake/rake_test_loader
+  Started
+  ..........................................................................................
+  Finished in 0.163422 seconds.
+
+  90 tests, 135 assertions, 0 failures, 0 errors
+
+If you place this plugin inside the vendor/plugin directory of your Rails
+application, the test suite will load your application environment by requiring
+RAILS_ROOT/test/test_helper.rb.
+
+Of course, you should also verify that your existing application tests still
+pass with XSS Shield enabled.
+
+== Bugs and feedback
+
+Please report bugs and feature requests
+{here}[http://github.com/jamestyj/xss_shield/issues]. Patches and suggestions
+are welcomed too.
+
+== Authors
+
+- Updated to support Rails 2.1 and maintained by {James
+  Tan}[http://github.com/jamestyj], Novell.
+- {Original code}[http://code.google.com/p/xss-shield/] written by {Tomasz
+  Wegrzanowski}[http://code.google.com/u/Tomasz.Wegrzanowski/], Trampoline Systems.
+
+== License
+
+Copyright (c) 2009 Novell. See MIT-LICENSE in this directory.
