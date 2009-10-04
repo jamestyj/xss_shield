@@ -91,12 +91,12 @@ class ActionView::Base
   mark_methods_as_xss_safe :render
 
   def link_to_with_xss_protection(text, *args)
-    link_to_without_xss_protection(text.to_s_xss_protected, *args).xss_safe
+    link_to_without_xss_protection(text.to_xss_safe, *args).xss_safe
   end
   alias_method_chain :link_to, :xss_protection
 
   def button_to_with_xss_protection(text, *args)
-    button_to_without_xss_protection(text.to_s_xss_protected, *args).xss_safe
+    button_to_without_xss_protection(text.to_xss_safe, *args).xss_safe
   end
   alias_method_chain :button_to, :xss_protection
 end

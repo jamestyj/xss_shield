@@ -5,12 +5,12 @@ class SafeStringTest < Test::Unit::TestCase
   include ERB::Util
 
   def test_safe_string
-    assert_equal "foo", "foo".to_s_xss_protected
-    assert_equal "foo &amp; bar", "foo & bar".to_s_xss_protected
-    assert_equal "foo &amp; bar", "foo & bar".to_s_xss_protected
-    assert_equal "foo &amp;amp; bar", "foo &amp; bar".to_s_xss_protected
-    assert_equal "foo &amp; bar", "foo & bar".to_s_xss_protected.to_s_xss_protected
-    assert_equal "foo &amp; bar", h("foo & bar").to_s_xss_protected
+    assert_equal "foo", "foo".to_xss_safe
+    assert_equal "foo &amp; bar", "foo & bar".to_xss_safe
+    assert_equal "foo &amp; bar", "foo & bar".to_xss_safe
+    assert_equal "foo &amp;amp; bar", "foo &amp; bar".to_xss_safe
+    assert_equal "foo &amp; bar", "foo & bar".to_xss_safe.to_xss_safe
+    assert_equal "foo &amp; bar", h("foo & bar").to_xss_safe
     assert_equal "foo &amp;amp; bar", h(h("foo & bar"))
     
     assert_not_equal "foo".xss_safe.object_id, "foo".xss_safe.object_id
@@ -24,13 +24,13 @@ class SafeStringTest < Test::Unit::TestCase
   end
   
   def test_nonstring_objects
-    assert_equal "15", 15.to_s_xss_protected
-    assert_equal SafeString, 15.to_s_xss_protected.class
+    assert_equal "15", 15.to_xss_safe
+    assert_equal SafeString, 15.to_xss_safe.class
   end
   
   def test_nil
-    assert_equal "", nil.to_s_xss_protected
-    assert_equal SafeString, nil.to_s_xss_protected.class
+    assert_equal "", nil.to_xss_safe
+    assert_equal SafeString, nil.to_xss_safe.class
     assert_equal nil, nil.xss_safe
   end
   

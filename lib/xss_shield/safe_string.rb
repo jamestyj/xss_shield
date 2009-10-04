@@ -2,7 +2,7 @@ class SafeString < String
   def to_s
     self
   end
-  def to_s_xss_protected
+  def to_xss_safe
     self
   end
 end
@@ -35,13 +35,13 @@ module ERB::Util
 end
 
 class Object
-  def to_s_xss_protected
+  def to_xss_safe
     ERB::Util.h(to_s).xss_safe
   end
 end
 
 class Array
   def join_xss_protected(sep="")
-    map(&:to_s_xss_protected).join(sep.to_s_xss_protected).xss_safe
+    map(&:to_xss_safe).join(sep.to_xss_safe).xss_safe
   end
 end

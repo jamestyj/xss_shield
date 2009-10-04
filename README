@@ -72,5 +72,5 @@ Also - RHTML protection only works with default ERB engine (erb.rb from Ruby bas
 If you use some alternative ERB engine it probably won't work.
 
 Adding support for alternative templating engine should be relatively straightforward.
-It's mostly a matter of changing to_s to to_s_xss_protected in a few places
+It's mostly a matter of changing to_s to to_xss_safe in a few places
 in their source.
