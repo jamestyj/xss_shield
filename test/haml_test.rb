@@ -25,7 +25,7 @@ OUT
 A & B
 = "C & D"
 = h("E & F")
-= "G & H".mark_as_xss_protected
+= "G & H".xss_safe
 = "I & J".to_s_xss_protected
 IN
   end
@@ -39,7 +39,7 @@ IN
 <div foo="A < & > ' " B" />
 OUT
 %div{:foo => @foo}/
-%div{:foo => @foo.mark_as_xss_protected}/
+%div{:foo => @foo.xss_safe}/
 IN
     # Note that '/" explicitly marked as XSS-protected can break validity
   end

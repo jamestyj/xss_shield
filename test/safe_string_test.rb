@@ -13,11 +13,11 @@ class SafeStringTest < Test::Unit::TestCase
     assert_equal "foo &amp; bar", h("foo & bar").to_s_xss_protected
     assert_equal "foo &amp;amp; bar", h(h("foo & bar"))
     
-    assert_not_equal "foo".mark_as_xss_protected.object_id, "foo".mark_as_xss_protected.object_id
-    x = "foo & bar".mark_as_xss_protected
-    assert_equal x.mark_as_xss_protected, x
+    assert_not_equal "foo".xss_safe.object_id, "foo".xss_safe.object_id
+    x = "foo & bar".xss_safe
+    assert_equal x.xss_safe, x
     # Not sure if this makes sense
-    assert_not_equal x.mark_as_xss_protected.object_id, x.object_id
+    assert_not_equal x.xss_safe.object_id, x.object_id
 
     assert_equal x.to_s, x
     assert_equal x.to_s.object_id, x.object_id
@@ -31,7 +31,7 @@ class SafeStringTest < Test::Unit::TestCase
   def test_nil
     assert_equal "", nil.to_s_xss_protected
     assert_equal SafeString, nil.to_s_xss_protected.class
-    assert_equal nil, nil.mark_as_xss_protected
+    assert_equal nil, nil.xss_safe
   end
   
   def test_join
@@ -44,15 +44,15 @@ class SafeStringTest < Test::Unit::TestCase
 
     assert_equal "a&amp;b", ["a", "b"].join_xss_protected("&")
     assert_equal "a&amp;amp;b", ["a", "b"].join_xss_protected("&amp;")
-    assert_equal "a&amp;b", ["a", "b"].join_xss_protected("&amp;".mark_as_xss_protected)
+    assert_equal "a&amp;b", ["a", "b"].join_xss_protected("&amp;".xss_safe)
 
     assert_equal "&lt;&amp;&gt;", ["<", ">"].join_xss_protected("&")
     assert_equal "&lt;&amp;amp;&gt;", ["<", ">"].join_xss_protected("&amp;")
-    assert_equal "&lt;&amp;&gt;", ["<", ">"].join_xss_protected("&amp;".mark_as_xss_protected)
+    assert_equal "&lt;&amp;&gt;", ["<", ">"].join_xss_protected("&amp;".xss_safe)
 
-    assert_equal "< &amp; &gt;", ["<".mark_as_xss_protected, ">"].join_xss_protected(" & ")
-    assert_equal "&lt; &amp; >", ["<", ">".mark_as_xss_protected].join_xss_protected(" & ")
-    assert_equal "&lt; & &gt;", ["<", ">"].join_xss_protected(" & ".mark_as_xss_protected)
+    assert_equal "< &amp; &gt;", ["<".xss_safe, ">"].join_xss_protected(" & ")
+    assert_equal "&lt; &amp; >", ["<", ">".xss_safe].join_xss_protected(" & ")
+    assert_equal "&lt; & &gt;", ["<", ">"].join_xss_protected(" & ".xss_safe)
   end
 
 end

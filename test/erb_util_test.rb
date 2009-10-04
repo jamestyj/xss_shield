@@ -17,10 +17,6 @@ class ErbUtilTest< Test::Unit::TestCase
       # Test that xss_safe works
       %(<%= "Foo & Bar".xss_safe %>)     => %(Foo & Bar),
       %(<%= "Foo &amp; Bar".xss_safe %>) => %(Foo &amp; Bar),
-
-      # Test that mark_as_xss_protected works
-      %(<%= "Foo & Bar".mark_as_xss_protected %>)     => %(Foo & Bar),
-      %(<%= "Foo &amp; Bar".mark_as_xss_protected %>) => %(Foo &amp; Bar)
     })
   end
 

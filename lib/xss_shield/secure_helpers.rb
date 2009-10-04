@@ -5,7 +5,7 @@ class Module
         instance_method("#{m}_with_xss_protection")
       rescue NameError
         define_method :"#{m}_with_xss_protection" do |*args|
-          send(:"#{m}_without_xss_protection", *args).mark_as_xss_protected
+          send(:"#{m}_without_xss_protection", *args).xss_safe
         end
         alias_method_chain m, :xss_protection
       end
@@ -91,12 +91,12 @@ class ActionView::Base
   mark_methods_as_xss_safe :render
 
   def link_to_with_xss_protection(text, *args)
-    link_to_without_xss_protection(text.to_s_xss_protected, *args).mark_as_xss_protected
+    link_to_without_xss_protection(text.to_s_xss_protected, *args).xss_safe
   end
   alias_method_chain :link_to, :xss_protection
 
   def button_to_with_xss_protection(text, *args)
-    button_to_without_xss_protection(text.to_s_xss_protected, *args).mark_as_xss_protected
+    button_to_without_xss_protection(text.to_s_xss_protected, *args).xss_safe
   end
   alias_method_chain :button_to, :xss_protection
 end
