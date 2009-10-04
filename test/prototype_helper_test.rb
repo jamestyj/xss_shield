@@ -34,9 +34,9 @@ class PrototypeHelperTest < Test::Unit::TestCase
   def test_periodically_call_remote
     assert_render(
       %(<%= periodically_call_remote %>) => %(
-        <script type="text/javascript">\n//<![CDATA[\nfunc_poller = \
-$.timer(10000, function() {var currentElement=this; Q.add({complete:\
-function(msg){fill_or_exec(msg,'replace','nothing');},});});\n//]]>\n</script>))
+      <script type="text/javascript">\n//<![CDATA[
+new PeriodicalExecuter(function() {new Ajax.Request('/test/foobar', \
+{asynchronous:true, evalScripts:true})}, 10)\n//]]>\n</script>))
   end
 
   def test_remote_form_for
@@ -52,9 +52,9 @@ function(msg){fill_or_exec(msg,'replace','nothing');},});});\n//]]>\n</script>))
   def test_submit_to_remote
     assert_render(
       %(<%= submit_to_remote 'foo&bar', 'f&b' %>) => %(
-        <input name="foo&amp;bar" type="button" value="f&amp;b" onclick="var \
-currentElement=this; Q.add({data: Form.serialize(this.form),complete:\
-function(msg){fill_or_exec(msg,'replace','nothing');},});; return false;"#{XHTML_TAGS}>))
+      <input name="foo&amp;bar" value="f&amp;b" type="button" onclick="\
+new Ajax.Request('/test/foobar', {asynchronous:true, evalScripts:true, \
+parameters:Form.serialize(this.form)}); return false;"#{XHTML_TAGS}>))
   end
 
 end
