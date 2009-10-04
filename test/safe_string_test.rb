@@ -34,25 +34,4 @@ class SafeStringTest < Test::Unit::TestCase
     assert_equal nil, nil.xss_safe
   end
   
-  def test_join
-    assert_equal "", [].join_xss_protected
-    assert_equal "", [].join_xss_protected(",")
-    assert_equal "a", ["a"].join_xss_protected
-    assert_equal "a", ["a"].join_xss_protected(",")
-    assert_equal "ab", ["a", "b"].join_xss_protected
-    assert_equal "a,b", ["a", "b"].join_xss_protected(",")
-
-    assert_equal "a&amp;b", ["a", "b"].join_xss_protected("&")
-    assert_equal "a&amp;amp;b", ["a", "b"].join_xss_protected("&amp;")
-    assert_equal "a&amp;b", ["a", "b"].join_xss_protected("&amp;".xss_safe)
-
-    assert_equal "&lt;&amp;&gt;", ["<", ">"].join_xss_protected("&")
-    assert_equal "&lt;&amp;amp;&gt;", ["<", ">"].join_xss_protected("&amp;")
-    assert_equal "&lt;&amp;&gt;", ["<", ">"].join_xss_protected("&amp;".xss_safe)
-
-    assert_equal "< &amp; &gt;", ["<".xss_safe, ">"].join_xss_protected(" & ")
-    assert_equal "&lt; &amp; >", ["<", ">".xss_safe].join_xss_protected(" & ")
-    assert_equal "&lt; & &gt;", ["<", ">"].join_xss_protected(" & ".xss_safe)
-  end
-
 end

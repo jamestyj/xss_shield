@@ -40,8 +40,3 @@ class Object
   end
 end
 
-class Array
-  def join_xss_protected(sep="")
-    map(&:to_xss_safe).join(sep.to_xss_safe).xss_safe
-  end
-end
