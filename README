@@ -45,7 +45,7 @@ to return SafeString.
 If you trust your helpers, make them as XSS-protected:
 
   module Some::Module
-    mark_helpers_as_xss_protected :text_field, :check_box
+    mark_methods_as_xss_safe :text_field, :check_box
   end
 
 Because it is not possible to alter syntactic keywords like yield

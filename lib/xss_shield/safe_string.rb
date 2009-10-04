@@ -11,12 +11,14 @@ class String
   def mark_as_xss_protected
     SafeString.new(self)
   end
+  alias :xss_safe :mark_as_xss_protected
 end
 
 class NilClass
   def mark_as_xss_protected
     self
   end
+  alias :xss_safe :mark_as_xss_protected
 end
 
 # ERB::Util.h and (include ERB::Util; h) are different methods

@@ -1,5 +1,5 @@
 unless ENV['DISABLE_XSS_SHIELD']
-  puts "Loading XSS Shield"
+  #puts "Loading XSS Shield"
   require 'xss_shield'
 else
   class ::String
