@@ -1,30 +1,29 @@
 # Loads the test environment. First try to load the Rails environment if we're
 # in a Rails project. Otherwise just load the libraries that we need.
+CUR_DIR = File.dirname(__FILE__)
+$LOAD_PATH << "#{CUR_DIR}/../lib"
 begin
-  test_helper = File.expand_path "#{File.dirname(__FILE__)}/../../../../test/test_helper"
-  puts "Loading #{test_helper}.rb ..."
-  require test_helper 
+  require File.expand_path "#{CUR_DIR}/../../../../test/test_helper"
 rescue LoadError
-  puts "No Rails environment found"
   require 'rubygems'
-  gem 'activerecord'
-  gem 'actionpack'
+  gem 'rails', '=2.1.2'
   require 'active_record'
   require 'action_controller'
+  require 'action_controller/test_process'
+  require 'action_view/test_case'
   require 'mocha'
+  require 'test/unit'
 end
+require 'init'
 
 # Disable deprecation warnings.
 ActiveSupport::Deprecation.silenced = true
 
 # Rails creates all HTML form elements as XHTML by default. We override this in
 # Studio, so make sure the tests here handle that.
-XHTML_TAGS = ''     # set this to ' /' if  you don't override this in your app
+XHTML_TAGS = ' /'     # set this to ' /' if  you don't override this in your app
 
 class ActionView::Base
-  # Include our javascript helpers.
-  include JqueryHelper
-
   # Disable forgery protection.
   def protect_against_forgery?
     false
