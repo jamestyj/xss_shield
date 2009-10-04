@@ -10,9 +10,9 @@ class AssetPackagerTest < Test::Unit::TestCase
   include Synthesis::AssetPackageHelper
 
 rescue NameError
-  puts "Skipping AssetPackger plugin tests"
+  puts "AssetPackager plugin not found, skipping related tests"
 
-else 
+else
 
   def test_stylesheet_link_merged
     assert_render(
