@@ -48,11 +48,11 @@ class XSSProtectedERB < ERB
 
               # Don't escape yield statements (they should already be safe)
               if content =~ /^[ \t]*yield[ |\(]/
-                xss_protect = ''
+                to_string = 'to_s'
               else
-                xss_protect = '_xss_protected'
+                to_string = 'to_xss_safe'
               end
-              out.push("#{@insert_cmd}((#{content}).to_s#{xss_protect})")
+              out.push("#{@insert_cmd}((#{content}).#{to_string})")
 
               # NOTE: End changed lines
             when '<%#'
