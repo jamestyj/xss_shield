@@ -53,7 +53,7 @@ unnecessary escaping.
 
 Currently only ERB templates is supported, but support for other templating
 engines should be relatively straightforward. It's mostly a matter of changing
-to_s to to_xss_safe in a few places in their source.
++to_s+ to +to_xss_safe+ in a few places in their source.
 
 Patches that add support for other templating engines (along with supporting
 tests) are welcomed.
