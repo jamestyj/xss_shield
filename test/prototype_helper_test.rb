@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test/test_helper'
 
 # Test that helpers from ActionView::Helpers::PrototypeHelper are escaped
 # correctly.
-class PrototypeHelperTest < Test::Unit::TestCase
+class PrototypeHelperTest < ActionView::TestCase
 
   def test_evaluate_remote_response
     assert_render(
@@ -54,7 +54,7 @@ new PeriodicalExecuter(function() {new Ajax.Request('/test/foobar', \
       %(<%= submit_to_remote 'foo&bar', 'f&b' %>) => %(
       <input name="foo&amp;bar" value="f&amp;b" type="button" onclick="\
 new Ajax.Request('/test/foobar', {asynchronous:true, evalScripts:true, \
-parameters:Form.serialize(this.form)}); return false;"#{XHTML_TAGS}>))
+parameters:Form.serialize(this.form)});"#{XHTML_TAGS}>))
   end
 
 end

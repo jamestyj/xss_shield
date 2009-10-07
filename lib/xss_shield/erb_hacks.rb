@@ -1,6 +1,6 @@
 # Create our own ERB compiler to handle <%= %> differently.
-# See /usr/lib/ruby/1.8/erb.erb.
-class XSSProtectedERB < ERB
+# See /usr/lib64/ruby/1.8/erb.rb.
+class XssShieldERB < ERB
   class Compiler < ::ERB::Compiler
     def compile(s)
       out = Buffer.new(self)
@@ -78,7 +78,7 @@ class XSSProtectedERB < ERB
     @safe_level = safe_level
     # NOTE: Changed lines
 
-    compiler = XSSProtectedERB::Compiler.new(trim_mode)
+    compiler = XssShieldERB::Compiler.new(trim_mode)
 
     # NOTE: End changed lines
     set_eoutvar(compiler, eoutvar)
@@ -88,14 +88,22 @@ class XSSProtectedERB < ERB
 end
 
 # Use our own ERB handler.
-# See /usr/lib/ruby/gems/1.8/gems/actionpack-2.1.0/lib/action_view/template_handlers/erb.rb.
+# See /usr/lib/ruby/gems/1.8/gems/actionpack-2.3.4/lib/action_view/template_handlers/erb.rb.
 module ActionView
   module TemplateHandlers
-    class ERB < TemplateHandler
+    class XssShieldERB < TemplateHandler
+      include Compilable
+
+      cattr_accessor :erb_trim_mode
+      self.erb_trim_mode = '-'
+
       def compile(template)
-        ::XSSProtectedERB.new(template.source, nil, @view.erb_trim_mode).src
+        ::XssShieldERB.new("<% __in_erb_template=true %>#{template.source}", nil, erb_trim_mode, '@output_buffer').src
       end
     end
   end
 end
+
+ActionView::Template.register_default_template_handler(
+  :erb, ActionView::TemplateHandlers::XssShieldERB)
 

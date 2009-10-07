@@ -6,7 +6,7 @@ begin
   require File.expand_path "#{CUR_DIR}/../../../../test/test_helper"
 rescue LoadError
   require 'rubygems'
-  gem 'rails', '=2.1.2'
+  gem 'rails', '=2.3.4'
   require 'active_record'
   require 'action_controller'
   require 'action_controller/test_process'
@@ -34,7 +34,7 @@ end
 class Test::Unit::TestCase
 
   VIEW_PATH = File.join(File.dirname(__FILE__), 'fixtures')
-  ActionView::TemplateFinder.process_view_paths(VIEW_PATH)
+  ActionController::Base.prepend_view_path(VIEW_PATH)
 
   private
 
@@ -47,12 +47,20 @@ class Test::Unit::TestCase
   def assert_render(args, options = {})
     args.each do |erb, expected|
       expected.strip!
-      actual = render_erb(erb, options[:locals])
-      assert_dom_equal expected, actual, "#{erb} => #{expected}"
+      begin
+        actual = render_erb(erb, options[:locals])
+      rescue Exception => ex
+        puts "ERB: #{erb} => Expected: #{expected}"
+        puts ex.message
+        puts ex.backtrace
+      end
+      assert_dom_equal actual, expected, "ERB: #{erb}"
     end
   end
 
-  def render_erb(erb, locals = {})
+  def render_erb(erb, variables)
+    variables ||= {}
+
     # Need this to make asset packager happy.
     request = mock()
     request.stubs(:relative_url_root).returns('')
@@ -65,7 +73,20 @@ class Test::Unit::TestCase
     controller.stubs(:url_for).returns('/test/foobar')
 
     view = ActionView::Base.new(VIEW_PATH, {}, controller)
-    ActionView::InlineTemplate.new(view, erb, locals).render.strip
+
+    template = ActionView::InlineTemplate.new(erb)
+    template.stubs(:relative_path).returns('/')
+
+    # Set instance variables
+    locals = variables.dup
+    variables.each do |key, value|
+      if key.to_s.start_with?('@')
+        view.instance_variable_set(key, value)
+        locals.delete(key)
+      end
+    end
+
+    template.render(view, locals).strip
   end
 
 end

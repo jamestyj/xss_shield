@@ -1,8 +1,7 @@
 require File.dirname(__FILE__) + '/../test/test_helper'
 
-# Test that helpers from ActionView::Helpers::UrlHelper are properly
-# escaped.
-class UrlHelperTest < Test::Unit::TestCase
+# Test that helpers from ActionView::Helpers::UrlHelper are properly escaped.
+class UrlHelperTest < ActionView::TestCase
 
   def test_button_to
     assert_render(

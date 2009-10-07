@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test/test_helper'
 
 # Test that helpers from ERB::Util are properly escaped.
-class ErbUtilTest< Test::Unit::TestCase
+class ErbUtilTest< ActionView::TestCase
 
   # h is an alias for html_escape.
   def test_html_escape

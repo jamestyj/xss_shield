@@ -55,11 +55,9 @@ class ActionView::Base
   mark_methods_as_xss_safe :select, 
                            :options_for_select,
                            :collection_select,
-                           :country_select,
                            :time_zone_select,
                            :options_from_collection_for_select,
                            :option_groups_from_collection_for_select,
-                           :country_options_for_select,
                            :time_zone_options_for_select
 
   # ActionView::Helpers::PrototypeHelper
