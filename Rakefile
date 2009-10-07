@@ -25,8 +25,9 @@ begin
     gemspec.homepage = 'http://github.com/jamestyj/xss_shield'
     gemspec.authors = [ 'James Tan' ]
   end
+  Jeweler::GemcutterTasks.new
 rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install " +
-       "technicalpickles-jeweler -s http://gems.github.com"
+  puts 'Jeweler (or a dependency) not available. ' +
+       'Install it with: sudo gem install jeweler.'
 end
 
