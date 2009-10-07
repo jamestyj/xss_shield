@@ -39,7 +39,8 @@ Gem::Specification.new do |s|
      "test/safe_string_test.rb",
      "test/template_object_test.rb",
      "test/test_helper.rb",
-     "test/url_helper_test.rb"
+     "test/url_helper_test.rb",
+     "xss_shield.gemspec"
   ]
   s.homepage = %q{http://github.com/jamestyj/xss_shield}
   s.rdoc_options = ["--charset=UTF-8"]
