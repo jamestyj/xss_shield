@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test/test_helper'
 
 # Test that helpers from ActionView::Helpers::JavaScriptHelper are properly
 # escaped.
-class JavascriptHelperTest < Test::Unit::TestCase
+class JavascriptHelperTest < ActionView::TestCase
 
   def test_button_to_function
     assert_render(

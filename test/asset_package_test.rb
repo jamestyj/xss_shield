@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../test/test_helper'
 
 # Test that helpers from Synthesis::AssetPackagerHelper are properly escaped.
-class AssetPackagerTest < Test::Unit::TestCase
+class AssetPackagerTest < ActionView::TestCase
 
   $asset_packages_yml = {
     "javascripts" => [{ "base" => [ "foobar" ] }], 
@@ -10,7 +10,7 @@ class AssetPackagerTest < Test::Unit::TestCase
   include Synthesis::AssetPackageHelper
 
 rescue NameError
-  puts "AssetPackager plugin not found, skipping related tests"
+  puts "Skipping AssetPackger plugin tests"
 
 else
 

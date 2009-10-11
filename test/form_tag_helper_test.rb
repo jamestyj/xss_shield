@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test/test_helper'
 
 # Test that helpers from ActionView::Helpers::FormTagHelper are properly
 # escaped.
-class FormTagHelperTest < Test::Unit::TestCase
+class FormTagHelperTest < ActionView::TestCase
 
   def test_check_box_tag
     assert_render(
@@ -20,7 +20,7 @@ class FormTagHelperTest < Test::Unit::TestCase
   def test_file_field_tag
     assert_render(
       %(<%= file_field_tag 'foo&bar' %>) => %(
-        <input name="foo&amp;bar" type="file" id="foo&amp;bar"#{XHTML_TAGS}>))
+        <input name="foo&amp;bar" type="file" id="foo_bar"#{XHTML_TAGS}>))
   end
 
   def test_form_tag
@@ -33,7 +33,7 @@ class FormTagHelperTest < Test::Unit::TestCase
   def test_hidden_field_tag
     assert_render(
       %(<%= hidden_field_tag 'foo&bar' %>) => %(
-        <input name="foo&amp;bar" type="hidden" id="foo&amp;bar"#{XHTML_TAGS}>))
+        <input name="foo&amp;bar" type="hidden" id="foo_bar"#{XHTML_TAGS}>))
   end
 
   def test_image_submit_tag
@@ -45,13 +45,13 @@ class FormTagHelperTest < Test::Unit::TestCase
   def test_label_tag
     assert_render(
       %(<%= label_tag 'foo&bar' %>) => %(
-        <label for="foo&amp;bar">Foo&bar</label>))
+        <label for="foo_bar">Foo&bar</label>))
   end
 
   def test_password_field_tag
     assert_render(
       %(<%= password_field_tag 'foo&bar' %>) => %(
-        <input name="foo&amp;bar" type="password" id="foo&amp;bar"#{XHTML_TAGS}>))
+        <input name="foo&amp;bar" type="password" id="foo_bar"#{XHTML_TAGS}>))
   end
 
   def test_radio_button_tag
@@ -64,7 +64,7 @@ class FormTagHelperTest < Test::Unit::TestCase
   def test_select_tag
     assert_render(
       %(<%= select_tag 'foo&bar' %>) => %(
-        <select name="foo&amp;bar" id="foo&amp;bar"></select>))
+        <select name="foo&amp;bar" id="foo_bar"></select>))
   end
 
   def test_submit_tag
@@ -76,13 +76,13 @@ class FormTagHelperTest < Test::Unit::TestCase
   def test_text_area_tag
     assert_render(
       %(<%= text_area_tag 'foo&bar' %>) => %(
-        <textarea name="foo&amp;bar" id="foo&amp;bar"></textarea>))
+        <textarea name="foo&amp;bar" id="foo_bar"></textarea>))
   end
 
   def test_text_field_tag
     assert_render(
       %(<%= text_field_tag 'foo&bar' %>) => %(
-        <input name="foo&amp;bar" type="text" id="foo&amp;bar"#{XHTML_TAGS}>))
+        <input name="foo&amp;bar" type="text" id="foo_bar"#{XHTML_TAGS}>))
   end
 
 end

@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test/test_helper'
 
 # Test that helpers from ActionView::Helpers::ActiveRecordHelper are properly
 # escaped.
-class ActiveRecordHelper < Test::Unit::TestCase
+class ActiveRecordHelper < ActionView::TestCase
 
   def setup
     @errors = mock()
@@ -18,7 +18,7 @@ class ActiveRecordHelper < Test::Unit::TestCase
     @errors.stubs(:on).with(:bar).returns('foo&bar')
     assert_render({
       %(<%= error_message_on :foo, :bar %>) => %(
-        <div class="formError">foo&bar</div>)
+        <div class="formError">foo&amp;bar</div>)
     }, @options)
   end
 
@@ -29,7 +29,7 @@ class ActiveRecordHelper < Test::Unit::TestCase
       %(<%= error_messages_for :foo %>) => %(
         <div class="errorExplanation" id="errorExplanation"><h2>1 error \
 prohibited this foo from being saved</h2><p>There were problems with the \
-following fields:</p><ul><li>foo&bar</li></ul></div>)
+following fields:</p><ul><li>foo&amp;bar</li></ul></div>)
     }, @options)
   end
 
@@ -37,8 +37,8 @@ following fields:</p><ul><li>foo&bar</li></ul></div>)
     @foo.stubs(:new_record?).returns(true)
     assert_render({
       %(<%= form :foo %>) => %(
-        <form action="/test/foobar" method="post">foo&name<input name="commit" \
-type="submit" value="Create"#{XHTML_TAGS}></form>)
+        <form action="/test/foobar" method="post">foo&name<input name="\
+commit" type="submit" value="Create"#{XHTML_TAGS}></form>)
     }, @options)
   end
 

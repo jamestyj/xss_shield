@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test/test_helper'
 
 # Test that helpers from ActionView::Helpers::AssetTagHelper are properly
 # escaped.
-class AssetTagHelper < Test::Unit::TestCase
+class AssetTagHelper < ActionView::TestCase
 
   def test_auto_discovery_link_tag
     assert_render(

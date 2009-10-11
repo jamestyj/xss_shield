@@ -12,11 +12,22 @@ Rake::TestTask.new(:test) do |t|
   t.verbose = true
 end
 
-desc 'Generate documentation for the xss-shield plugin.'
-Rake::RDocTask.new(:rdoc) do |rdoc|
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title    = 'XSS Shield'
-  rdoc.options << '--line-numbers' << '--inline-source'
-  rdoc.rdoc_files.include('README')
-  rdoc.rdoc_files.include('lib/**/*.rb')
+begin
+  require 'jeweler'
+  Jeweler::Tasks.new do |gemspec|
+    gemspec.name = 'xss_shield'
+    gemspec.summary = 'Protect your Rails site from XSS attacks.'
+    gemspec.description = 'This Rails plugin provides automatic cross site ' +
+      'scripting (XSS) protection for your views. Once installed, you no ' +
+      'longer have to manually and painstakingly sanitize all your views ' +
+      'with HTML escaping.'
+    gemspec.email = 'jamestyj@gmail.com'
+    gemspec.homepage = 'http://github.com/jamestyj/xss_shield'
+    gemspec.authors = [ 'James Tan' ]
+  end
+  Jeweler::GemcutterTasks.new
+rescue LoadError
+  puts 'Jeweler (or a dependency) not available. ' +
+       'Install it with: sudo gem install jeweler.'
 end
+

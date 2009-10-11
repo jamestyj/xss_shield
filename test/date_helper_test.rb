@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../test/test_helper'
 
 # Test that helpers from ActionView::Helpers::DateHelper are properly
 # escaped.
-class DateHelperTest < Test::Unit::TestCase
+class DateHelperTest < ActionView::TestCase
 
   def test_date_select
     assert_render_has_no_escaped_chars %(<%= date_select :foo, :created_on %>)

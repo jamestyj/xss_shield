@@ -14,7 +14,7 @@ will return a +SafeString+:
 and not a plain, unsafe +String+:
   <a href="/foo">A & B</a>
 
-This version has been tested to work with <b><i>Rails 2.1.2</i></b>. Your milage
+This version has been tested to work with <b><i>Rails 2.3.4</i></b>. Your milage
 may vary.
 
 DISCLAIMER: Note that while no effort is spared to ensure that this plugin works as
